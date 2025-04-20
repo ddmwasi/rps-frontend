@@ -5,11 +5,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,17 +26,31 @@ import com.danielmwasi.rps.rpsbackend.service.GameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(GameRestClientFacadeImpl.class)
-@Import(NoSecurityConfig.class)
+@Import({ NoSecurityConfig.class, GameRestClientFacadeImplTest.MockedGameServiceConfig.class })
 class GameRestClientFacadeImplTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private GameService gameService;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @TestConfiguration
+    static class MockedGameServiceConfig {
+        @Bean
+        @Primary
+        public GameService gameService() {
+            return Mockito.mock(GameService.class);
+        }
+    }
+
+    @BeforeEach
+    void setupMock() {
+        Mockito.reset(gameService);
+    }
 
     @Test
     void playGame() throws Exception {
@@ -52,10 +70,7 @@ class GameRestClientFacadeImplTest {
 
     @Test
     void playGame_badRequest() throws Exception {
-        MoveRequest request = new MoveRequest();
-        GameResult expected = new GameResult(Move.ROCK, Move.PAPER, Result.COMPUTER_WINS);
-
-        when(gameService.play(Move.ROCK)).thenReturn(expected);
+        MoveRequest request = new MoveRequest(); // no move set
 
         mockMvc.perform(post("/api/rps-game/play")
                         .contentType(MediaType.APPLICATION_JSON)
