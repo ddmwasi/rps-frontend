@@ -1,0 +1,5 @@
+export enum Result {
+  PLAYER_WINS = 'PLAYER_WINS',
+  COMPUTER_WINS = 'COMPUTER_WINS',
+  DRAW = 'DRAW'
+}

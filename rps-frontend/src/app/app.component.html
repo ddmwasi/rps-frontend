@@ -1,0 +1,61 @@
+<div class="container text-center mt-5" [formGroup]="form">
+  <div class="d-flex justify-content-center gap-3 mb-4">
+    @for (move of moves; track move.label) {
+      <button
+        type="button"
+        class="btn btn-lg px-5 py-3 btn-scale"
+        [ngClass]="getButtonClasses(move.chosenMove, move.color)"
+        (click)="selectMove(move.chosenMove)">
+        <i class="bi {{ move.icon }} me-2"></i>
+        {{ move.label }}
+      </button>
+    }
+  </div>
+
+  <div class="mb-4">
+    <div [attr.title]="this.isDisabled ? 'Select a move first' : 'Ready to play!'">
+      <button
+        type="button"
+        class="btn btn-dark btn-lg btn-scale"
+        [disabled]="this.isDisabled"
+        (click)="playGame()">
+        <i class="bi bi-play-fill me-2"></i>
+        Play
+      </button>
+    </div>
+  </div>
+
+  @if (playerMove() || computerMove() || result()) {
+    <div class="mt-4 fade-in">
+      @if (playerMove()) {
+        <p>
+          <i class="bi bi-person-fill me-1"></i>
+          You chose: <strong>{{ playerMove() }}</strong>
+        </p>
+      }
+      @if (computerMove()) {
+        <p>
+          <i class="bi bi-cpu-fill me-1"></i>
+          The computer chose: <strong>{{ computerMove() }}</strong>
+        </p>
+      }
+      @if (result()) {
+        <p class="h4 mt-3 text-yellow">
+          <i class="bi bi-trophy-fill me-2"></i>
+          {{ result() }}
+        </p>
+      }
+    </div>
+  }
+
+  @if (this.error) {
+    <h1 class="text-danger">Error calling the backend, please try again!</h1>
+  }
+</div>
+
+@if (this.isLoading) {
+  <div class="loading-indicator">
+    <div class="spinner-border" role="status"></div>
+  </div>
+}
+
