@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.danielmwasi.rps.rpsbackend.NoSecurityConfig;
+import com.danielmwasi.rps.rpsbackend.config.NoSecurityConfig;
 import com.danielmwasi.rps.rpsbackend.model.GameResult;
 import com.danielmwasi.rps.rpsbackend.model.Move;
 import com.danielmwasi.rps.rpsbackend.model.MoveRequest;
