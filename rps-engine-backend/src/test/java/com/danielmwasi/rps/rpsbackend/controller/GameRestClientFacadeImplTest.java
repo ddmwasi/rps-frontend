@@ -70,7 +70,7 @@ class GameRestClientFacadeImplTest {
 
     @Test
     void playGame_badRequest() throws Exception {
-        MoveRequest request = new MoveRequest(); // no move set
+        MoveRequest request = new MoveRequest();
 
         mockMvc.perform(post("/api/rps-game/play")
                         .contentType(MediaType.APPLICATION_JSON)

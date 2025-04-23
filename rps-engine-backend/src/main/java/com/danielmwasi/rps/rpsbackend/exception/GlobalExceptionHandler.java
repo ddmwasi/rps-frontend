@@ -1,6 +1,5 @@
 package com.danielmwasi.rps.rpsbackend.exception;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.danielmwasi.rps.rpsbackend.model.ErrorResponse;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -33,8 +33,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler()
     public ResponseEntity<ErrorResponse> handleExceptions(Exception ex) {
-
-        String field = "Unknown";
         String message = ex.getMessage();
         ErrorResponse errorResponse = new ErrorResponse("INTERNAL_SERVER_ERROR", message);
         log.error("Exception error occurred: {}", errorResponse);
