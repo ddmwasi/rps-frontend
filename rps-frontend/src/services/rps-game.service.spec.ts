@@ -5,10 +5,16 @@ import {env} from '../environments/environment';
 import {GameResult} from '../model/GameResult';
 import {Move} from '../model/move.enum';
 import {Result} from '../model/result.enum';
+import {BrowserDynamicTestingModule, platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
+import 'zone.js';
 
 describe('RPSGameService', () => {
   let service: RPSGameService;
   let httpMock: HttpTestingController;
+
+  beforeAll(() => {
+    TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+  });
 
   beforeEach(() => {
     TestBed.configureTestingModule({

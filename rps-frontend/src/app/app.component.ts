@@ -1,3 +1,4 @@
+import "@angular/compiler";
 import {CommonModule} from '@angular/common';
 import {Component, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
