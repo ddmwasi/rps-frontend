@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {RPSGameService} from './rps-game.service';
-import {env} from '../environments/environment';
+import {env} from '../../../environments/environment';
 import {GameResult} from '../model/GameResult';
 import {Move} from '../model/move.enum';
 import {Result} from '../model/result.enum';

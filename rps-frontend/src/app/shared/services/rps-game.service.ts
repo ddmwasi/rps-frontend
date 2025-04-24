@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {catchError, Observable, throwError} from 'rxjs';
-import {env} from '../environments/environment';
+import {env} from '../../../environments/environment';
 import {GameResult} from '../model/GameResult';
 
 @Injectable({
