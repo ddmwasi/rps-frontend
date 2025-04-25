@@ -10,6 +10,7 @@ import {TestBed} from '@angular/core/testing';
 import {CommonModule} from '@angular/common';
 import {BrowserDynamicTestingModule, platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
 import "zone.js"
+import {provideStore} from '@ngrx/store';
 
 TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
 
@@ -33,6 +34,7 @@ describe('AppComponent', () => {
         provide: RPSGameService,
         useValue: mockRPSGameService
       },
+        provideStore(),
         provideHttpClient()]
     }).compileComponents();
   });

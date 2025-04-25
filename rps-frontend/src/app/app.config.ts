@@ -6,6 +6,8 @@ import {provideHttpClient} from '@angular/common/http';
 import {provideState, provideStore} from '@ngrx/store';
 import {reducer} from './store/app.reducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {provideEffects} from '@ngrx/effects';
+import {AppEffects} from './store/app.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +22,7 @@ export const appConfig: ApplicationConfig = {
       }
     }),
     provideState('app', reducer),
+    provideEffects([AppEffects]),
     importProvidersFrom(StoreDevtoolsModule.instrument())
   ]
 };

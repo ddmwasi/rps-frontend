@@ -7,7 +7,7 @@ import {RPSGameService} from './shared/services/rps-game.service';
 import {Move} from './shared/model/move.enum';
 import {Result} from './shared/model/result.enum';
 import {Store} from '@ngrx/store';
-import {isLoading} from "./store/app.actions";
+import {playGame} from "./store/app.actions";
 import {appSelectors} from './store/app.selector';
 
 @Component({
@@ -93,23 +93,19 @@ export class AppComponent {
         this.result.set(Result.COMPUTER_WINS);
       }
     } else {
-      this.error = false;
       const playerMove = this.playerMove();
       if (playerMove !== null) {
-        this.store.dispatch(isLoading({isLoading: true}));
-        this.rpsGameService.playRPSGame(playerMove).subscribe({
-            next: response => {
-              this.error = false;
-              this.store.dispatch(isLoading({isLoading: false}));
-              this.computerMove.set(response.computerMove);
-              this.result.set(response.result);
-            },
-          error: () => {
-              this.error = true;
-            this.store.dispatch(isLoading({isLoading: false}));
-            }
+        this.store.dispatch(playGame({playerMove: playerMove}));
+        this.store.select(appSelectors.gameResult).subscribe(gameResult => {
+          if (gameResult) {
+            this.computerMove.set(gameResult.computerMove);
+            this.result.set(gameResult.result);
           }
-        )
+        });
+
+        this.store.select(appSelectors.isError).subscribe(isError => {
+          this.error = isError;
+        });
       }
     }
   }

@@ -1,26 +1,41 @@
 import {GameResult} from '../shared/model/GameResult';
 import {Action, createReducer, on} from '@ngrx/store';
-import {isLoading} from './app.actions';
+import {playGame, playGameFailure, playGameSuccess} from './app.actions';
 
 export interface AppState {
   isLoading: boolean;
-  gameResult: GameResult;
+  gameResult: GameResult | null;
+  isError: boolean;
 }
 
 export const initialState: AppState = {
   isLoading: false,
-  gameResult: {
-    playerMove: null,
-    computerMove: null,
-    result: null
-  }
+  gameResult: null,
+  isError: false
 }
 
 const _appStateReducer = createReducer(
   initialState,
-  on(isLoading, (state, {isLoading}) => ({
+  on(playGame, (state) => ({
       ...state,
-      isLoading: isLoading
+      isLoading: true
+    })
+  ),
+  on(playGameSuccess, (state, {playerMove, computerMove, result}) => ({
+      ...state,
+      gameResult: {
+        playerMove: playerMove,
+        computerMove: computerMove,
+        result: result
+      },
+      isLoading: false,
+      isError: false
+    })
+  ),
+  on(playGameFailure, (state, {error}) => ({
+      ...state,
+    isLoading: false,
+    isError: error
     })
   )
 );

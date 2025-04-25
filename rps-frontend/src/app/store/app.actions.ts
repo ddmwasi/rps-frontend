@@ -1,12 +1,32 @@
 import {createAction, props} from '@ngrx/store';
+import {Move} from '../shared/model/move.enum';
+import {Result} from '../shared/model/result.enum';
 
 export enum AppActionTypes {
-  IsLoading = '[APP] Is Loading'
+  PlayGame = '[APP] Play Game',
+  PlayGameSuccess = '[APP] Play Game Success',
+  PlayGameFailure = '[APP] Play Game Failure'
 }
 
-export const isLoading = createAction(
-  AppActionTypes.IsLoading,
+export const playGame = createAction(
+  AppActionTypes.PlayGame,
   props<{
-    isLoading: boolean
+    playerMove: Move
+  }>()
+);
+
+export const playGameSuccess = createAction(
+  AppActionTypes.PlayGameSuccess,
+  props<{
+    playerMove: Move,
+    computerMove: Move,
+    result: Result
+  }>()
+);
+
+export const playGameFailure = createAction(
+  AppActionTypes.PlayGameFailure,
+  props<{
+    error: boolean
   }>()
 );
