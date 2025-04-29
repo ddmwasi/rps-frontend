@@ -49,7 +49,18 @@ export class AppComponent {
 
     this.store.select(appSelectors.isLoading).subscribe(isLoading => {
       this.isLoading = isLoading;
-    })
+    });
+
+    this.store.select(appSelectors.gameResult).subscribe(gameResult => {
+      if (gameResult) {
+        this.computerMove.set(gameResult.computerMove);
+        this.result.set(gameResult.result);
+      }
+    });
+
+    this.store.select(appSelectors.isError).subscribe(isError => {
+      this.error = isError;
+    });
 
     this.error = false;
   }
@@ -96,16 +107,6 @@ export class AppComponent {
       const playerMove = this.playerMove();
       if (playerMove !== null) {
         this.store.dispatch(playGame({playerMove: playerMove}));
-        this.store.select(appSelectors.gameResult).subscribe(gameResult => {
-          if (gameResult) {
-            this.computerMove.set(gameResult.computerMove);
-            this.result.set(gameResult.result);
-          }
-        });
-
-        this.store.select(appSelectors.isError).subscribe(isError => {
-          this.error = isError;
-        });
       }
     }
   }

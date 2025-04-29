@@ -42,7 +42,7 @@ describe('AppEffects', () => {
     rpsGameService = TestBed.inject(RPSGameService);
   });
 
-  it('should return playGameSuccess action on success', () => {
+  it('should return playGameSuccess action on success', done => {
     const action = playGame({playerMove: Move.ROCK});
     const completion = playGameSuccess({
       playerMove: Move.ROCK,
@@ -55,10 +55,11 @@ describe('AppEffects', () => {
 
     effects.playGame$.subscribe((result: any) => {
       expect(result).toEqual(completion);
+      done();
     });
   });
 
-  it('should return playGameFailure action on error', () => {
+  it('should return playGameFailure action on error', done => {
     const action = playGame({playerMove: Move.ROCK});
     const completion = playGameFailure({error: true});
 
@@ -67,6 +68,7 @@ describe('AppEffects', () => {
 
     effects.playGame$.subscribe((result: any) => {
       expect(result).toEqual(completion);
+      done();
     });
   });
 });
